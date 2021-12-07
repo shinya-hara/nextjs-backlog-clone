@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 
 const ProjectHome: NextPage = () => {
   const router = useRouter();
-  const { key } = router.query;
+  const { projectKey } = router.query;
 
   return (
     <div>
       <h1>Project Home</h1>
-      <p>key: {key}</p>
+      <p>projectKey: {projectKey}</p>
     </div>
   );
 };
