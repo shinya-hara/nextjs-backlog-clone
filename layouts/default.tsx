@@ -16,8 +16,15 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import HomeIcon from '@mui/icons-material/Home';
+import AddIcon from '@mui/icons-material/Add';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import DescriptionIcon from '@mui/icons-material/Description';
+import FolderIcon from '@mui/icons-material/Folder';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Tooltip } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -88,6 +95,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 }));
 
+const drawerItems = [
+  { label: 'ホーム', icon: HomeIcon },
+  { label: '課題の追加', icon: AddIcon },
+  { label: '課題', icon: ListAltIcon },
+  { label: 'ボード', icon: BarChartIcon, sx: { transform: 'rotate(180deg)' } },
+  { label: 'ガントチャート', icon: ClearAllIcon, sx: { transform: 'scaleX(-1)' } },
+  { label: 'Wiki', icon: DescriptionIcon },
+  { label: 'ファイル', icon: FolderIcon },
+  { label: 'プロジェクト設定', icon: SettingsIcon },
+];
+
 const MiniDrawer: React.FC = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -118,7 +136,7 @@ const MiniDrawer: React.FC = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            PROJECT NAME
           </Typography>
         </Toolbar>
       </AppBar>
@@ -130,21 +148,21 @@ const MiniDrawer: React.FC = ({ children }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          {drawerItems.map((item) => {
+            const listItem = (
+              <ListItem button key={item.label}>
+                <ListItemIcon>{React.createElement(item.icon, { sx: item.sx })}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            );
+            return open ? (
+              listItem
+            ) : (
+              <Tooltip title={item.label} placement="right" arrow key={item.label}>
+                {listItem}
+              </Tooltip>
+            );
+          })}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
