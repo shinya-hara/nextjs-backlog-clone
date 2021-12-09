@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import Link from 'next/link';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -95,15 +96,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 }));
 
+const projectKey = 'PROJECT_KEY';
 const drawerItems = [
-  { label: 'ホーム', icon: HomeIcon },
-  { label: '課題の追加', icon: AddIcon },
-  { label: '課題', icon: ListAltIcon },
-  { label: 'ボード', icon: BarChartIcon, sx: { transform: 'rotate(180deg)' } },
-  { label: 'ガントチャート', icon: ClearAllIcon, sx: { transform: 'scaleX(-1)' } },
-  { label: 'Wiki', icon: DescriptionIcon },
-  { label: 'ファイル', icon: FolderIcon },
-  { label: 'プロジェクト設定', icon: SettingsIcon },
+  { label: 'ホーム', icon: HomeIcon, href: `/projects/${projectKey}` },
+  { label: '課題の追加', icon: AddIcon, href: `/add/${projectKey}` },
+  { label: '課題', icon: ListAltIcon, href: `/find/${projectKey}` },
+  { label: 'ボード', icon: BarChartIcon, href: `/board/${projectKey}`, sx: { transform: 'rotate(180deg)' } },
+  { label: 'ガントチャート', icon: ClearAllIcon, href: `/gantt/${projectKey}`, sx: { transform: 'scaleX(-1)' } },
+  { label: 'Wiki', icon: DescriptionIcon, href: `/wiki/${projectKey}` },
+  { label: 'ファイル', icon: FolderIcon, href: `/file/${projectKey}` },
+  { label: 'プロジェクト設定', icon: SettingsIcon, href: `/settings/${projectKey}` },
 ];
 
 const MiniDrawer: React.FC = ({ children }) => {
@@ -136,7 +138,7 @@ const MiniDrawer: React.FC = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            PROJECT NAME
+            PROJECT NAME ({projectKey})
           </Typography>
         </Toolbar>
       </AppBar>
@@ -150,17 +152,21 @@ const MiniDrawer: React.FC = ({ children }) => {
         <List>
           {drawerItems.map((item) => {
             const listItem = (
-              <ListItem button key={item.label}>
+              <ListItem button>
                 <ListItemIcon>{React.createElement(item.icon, { sx: item.sx })}</ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             );
             return open ? (
-              listItem
-            ) : (
-              <Tooltip title={item.label} placement="right" arrow key={item.label}>
+              <Link href={item.href} passHref key={item.label}>
                 {listItem}
-              </Tooltip>
+              </Link>
+            ) : (
+              <Link href={item.href} passHref key={item.label}>
+                <Tooltip title={item.label} placement="right" arrow key={item.label}>
+                  {listItem}
+                </Tooltip>
+              </Link>
             );
           })}
         </List>
