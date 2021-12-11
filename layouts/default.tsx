@@ -36,6 +36,9 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
+  color: '#fff',
+  backgroundColor: 'rgb(76, 175, 147)',
+  fontWeight: 'bold',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -48,6 +51,8 @@ const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(9)} + 1px)`,
   },
+  color: '#fff',
+  backgroundColor: 'rgb(76, 175, 147)',
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -123,7 +128,7 @@ const MiniDrawer: React.FC = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} color="inherit">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -145,7 +150,11 @@ const MiniDrawer: React.FC = ({ children }) => {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === 'rtl' ? (
+              <ChevronRightIcon sx={{ color: '#fff' }} />
+            ) : (
+              <ChevronLeftIcon sx={{ color: '#fff' }} />
+            )}
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -153,7 +162,7 @@ const MiniDrawer: React.FC = ({ children }) => {
           {drawerItems.map((item) => {
             const listItem = (
               <ListItem button>
-                <ListItemIcon>{React.createElement(item.icon, { sx: item.sx })}</ListItemIcon>
+                <ListItemIcon>{React.createElement(item.icon, { sx: { color: '#fff', ...item.sx } })}</ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             );
