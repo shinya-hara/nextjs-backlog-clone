@@ -143,7 +143,7 @@ const MiniDrawer: React.FC = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            PROJECT NAME ({projectKey})
+            App Bar
           </Typography>
         </Toolbar>
       </AppBar>
@@ -180,7 +180,7 @@ const MiniDrawer: React.FC = ({ children }) => {
           })}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <DrawerHeader />
         {children}
       </Box>
